@@ -81,3 +81,5 @@ fabric.properties
 *.out
 
 .idea
+/test.go
+/vendor/
