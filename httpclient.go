@@ -1,28 +1,27 @@
-package http
+package logstash
 
 import (
 	"bytes"
-	"errors"
-	"logstash-go-client"
+	"github.com/pkg/errors"
 	"logstash-go-client/pkg/encode"
 	"net/http"
 )
 
-type Client struct {
+type HttpClient struct {
 	Host        string
 	HttpClient  *http.Client
 	JsonEncoder encode.JsonEncoder
 }
 
-func NewClient(host string, httpClient *http.Client) *Client {
-	return &Client{Host: host, HttpClient: httpClient, JsonEncoder: encode.NewGojayEncoder()}
+func NewClient(host string, httpClient *http.Client) *HttpClient {
+	return &HttpClient{Host: host, HttpClient: httpClient, JsonEncoder: encode.NewGojayEncoder()}
 }
 
-func (c *Client) SetJsonEncoder(encoder encode.JsonEncoder) {
+func (c *HttpClient) SetJsonEncoder(encoder encode.JsonEncoder) {
 	c.JsonEncoder = encoder
 }
 
-func (c Client) Send(sendingItem logstash.SendItem) error {
+func (c HttpClient) Send(sendingItem SendItem) error {
 	fieldsInBytes, err := c.JsonEncoder.Marshal(sendingItem)
 	if err != nil {
 		return err
@@ -36,7 +35,7 @@ func (c Client) Send(sendingItem logstash.SendItem) error {
 	return nil
 }
 
-func (c Client) SendBytes(messageInBytes []byte) error {
+func (c HttpClient) SendBytes(messageInBytes []byte) error {
 	request, err := http.NewRequest("POST", c.Host, bytes.NewBuffer(messageInBytes))
 	if err != nil {
 
