@@ -1,6 +1,6 @@
 package logstash
 
 type Sender interface {
-	SendFields(fields Fields) error
+	Send(fields Fields) error
 	SendBytes(messageInBytes []byte) error
 }

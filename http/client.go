@@ -22,8 +22,8 @@ func (c *Client) SetJsonEncoder(encoder encode.JsonEncoder) {
 	c.JsonEncoder = encoder
 }
 
-func (c Client) SendFields(fields logstash.Fields) error {
-	fieldsInBytes, err := c.JsonEncoder.Marshal(fields)
+func (c Client) Send(sendingItem logstash.SendItem) error {
+	fieldsInBytes, err := c.JsonEncoder.Marshal(sendingItem)
 	if err != nil {
 		return err
 	}
