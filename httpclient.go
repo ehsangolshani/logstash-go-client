@@ -13,7 +13,7 @@ type HttpClient struct {
 	JsonEncoder encode.JsonEncoder
 }
 
-func NewClient(host string, httpClient *http.Client) *HttpClient {
+func NewHttpClient(host string, httpClient *http.Client) *HttpClient {
 	return &HttpClient{Host: host, HttpClient: httpClient, JsonEncoder: encode.NewGojayEncoder()}
 }
 
