@@ -1,7 +1,7 @@
 package encode
 
-import "logstash-go-client"
+import logstash "logstash-go-client"
 
 type JsonEncoder interface {
-	Marshal(fields logstash.Fields) ([]byte, error)
+	Marshal(sendItem logstash.SendItem) ([]byte, error)
 }
