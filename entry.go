@@ -48,3 +48,32 @@ func (e Entry) UnmarshalJSONObject(dec *gojay.Decoder, k string) error {
 func (e Entry) NKeys() int {
 	return 0
 }
+
+func (e Entry) WithTimestamp() *Entry {
+	timestamp := time.Now()
+	e.Timestamp = &timestamp
+	e.timeFormat = time.RFC3339
+	return &e
+}
+
+func (e Entry) WithTimeFormat(timeFormat string) *Entry {
+	e.timeFormat = time.RFC3339
+	return &e
+}
+
+func (e Entry) WithVersion(version string) *Entry {
+	e.Version = version
+	return &e
+}
+
+func (e Entry) WithField(name string, value interface{}) *Entry {
+	e.Fields[name] = value
+	return &e
+}
+
+func (e Entry) WithFields(data map[string]interface{}) *Entry {
+	for name, value := range data {
+		e.Fields[name] = value
+	}
+	return &e
+}
