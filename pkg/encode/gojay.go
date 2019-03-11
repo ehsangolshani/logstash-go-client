@@ -1,8 +1,8 @@
 package encode
 
 import (
+	"github.com/ehsangolshani/logstash-go-client"
 	"github.com/francoispqt/gojay"
-	"logstash-go-client"
 )
 
 type GojayEncoder struct{}

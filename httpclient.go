@@ -2,8 +2,8 @@ package logstash
 
 import (
 	"bytes"
+	"github.com/ehsangolshani/logstash-go-client/pkg/encode"
 	"github.com/pkg/errors"
-	"logstash-go-client/pkg/encode"
 	"net/http"
 )
 
