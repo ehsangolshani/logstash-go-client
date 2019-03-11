@@ -1,10 +1,39 @@
 package logstash
 
 import (
+	"fmt"
+	"github.com/francoispqt/gojay"
 	"time"
 )
 
 type Fields map[string]interface{}
+
+func (f Fields) MarshalJSONObject(enc *gojay.Encoder) {
+	a := Entry{}
+	fmt.Println(a)
+
+	for k, v := range f {
+		enc.AddInterfaceKeyOmitEmpty(k, v)
+	}
+}
+
+func (f Fields) IsNil() bool {
+	return f == nil
+}
+
+func (f Fields) UnmarshalJSONObject(dec *gojay.Decoder, k string) error {
+	var value interface{}
+	err := dec.Interface(&value)
+	if err != nil {
+		return err
+	}
+	f[k] = value
+	return nil
+}
+
+func (f Fields) NKeys() int {
+	return 0
+}
 
 func (f Fields) WithTimestamp() *Entry {
 	timestamp := time.Now()
