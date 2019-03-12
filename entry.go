@@ -20,7 +20,7 @@ func (e Entry) MarshalJSONObject(enc *gojay.Encoder) {
 	for k, v := range e.Fields {
 		enc.AddInterfaceKeyOmitEmpty(k, v)
 	}
-	enc.StringKeyNullEmpty("@version", e.Version)
+	enc.StringKeyOmitEmpty("@version", e.Version)
 	enc.TimeKey("@timestamp", e.Timestamp, e.timeFormat)
 }
 
@@ -30,9 +30,9 @@ func (e Entry) IsNil() bool {
 
 func (e Entry) UnmarshalJSONObject(dec *gojay.Decoder, k string) error {
 	switch k {
-	case "id":
+	case "@version":
 		return dec.String(&e.Version)
-	case "name":
+	case "@timestamp":
 		return dec.Time(e.Timestamp, e.timeFormat)
 	default:
 		var value interface{}
@@ -62,16 +62,25 @@ func (e Entry) WithTimeFormat(timeFormat string) *Entry {
 }
 
 func (e Entry) WithVersion(version string) *Entry {
+	if e.timeFormat == "" {
+		e.timeFormat = time.RFC3339
+	}
 	e.Version = version
 	return &e
 }
 
 func (e Entry) WithField(name string, value interface{}) *Entry {
+	if e.timeFormat == "" {
+		e.timeFormat = time.RFC3339
+	}
 	e.Fields[name] = value
 	return &e
 }
 
 func (e Entry) WithFields(data map[string]interface{}) *Entry {
+	if e.timeFormat == "" {
+		e.timeFormat = time.RFC3339
+	}
 	for name, value := range data {
 		e.Fields[name] = value
 	}

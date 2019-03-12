@@ -45,17 +45,17 @@ func (f Fields) WithTimeFormat(timeFormat string) *Entry {
 }
 
 func (f Fields) WithVersion(version string) *Entry {
-	return &Entry{Fields: f, Version: version}
+	return &Entry{Fields: f, Version: version, timeFormat: time.RFC3339}
 }
 
 func (f Fields) WithField(name string, value interface{}) *Entry {
 	f[name] = value
-	return &Entry{Fields: f}
+	return &Entry{Fields: f, timeFormat: time.RFC3339}
 }
 
 func (f Fields) WithFields(data map[string]interface{}) *Entry {
 	for name, value := range data {
 		f[name] = value
 	}
-	return &Entry{Fields: f}
+	return &Entry{Fields: f, timeFormat: time.RFC3339}
 }
