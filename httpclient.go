@@ -2,7 +2,6 @@ package logstash
 
 import (
 	"bytes"
-	"github.com/ehsangolshani/logstash-go-client/pkg/encode"
 	"github.com/pkg/errors"
 	"net/http"
 )
@@ -10,14 +9,15 @@ import (
 type HttpClient struct {
 	Host        string
 	HttpClient  *http.Client
-	JsonEncoder encode.JsonEncoder
+	JsonEncoder JsonEncoder
 }
 
 func NewHttpClient(host string, httpClient *http.Client) *HttpClient {
-	return &HttpClient{Host: host, HttpClient: httpClient, JsonEncoder: encode.NewGojayEncoder()}
+	return &HttpClient{Host: host, HttpClient: httpClient, JsonEncoder: NewGojayJsonEncoder()}
+
 }
 
-func (c *HttpClient) SetJsonEncoder(encoder encode.JsonEncoder) {
+func (c *HttpClient) SetJsonEncoder(encoder JsonEncoder) {
 	c.JsonEncoder = encoder
 }
 

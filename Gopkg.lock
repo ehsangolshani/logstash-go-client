@@ -2,17 +2,6 @@
 
 
 [[projects]]
-  branch = "master"
-  digest = "1:211d0e2f5db6fd4d4e6be78f0d1fb5c8d0389f2d8f736621d050bf357d7ce0df"
-  name = "github.com/ehsangolshani/logstash-go-client"
-  packages = [
-    ".",
-    "pkg/encode",
-  ]
-  pruneopts = "UT"
-  revision = "954739b7c7caf14a954e0b3f3a4dbe56a71435fc"
-
-[[projects]]
   digest = "1:3d2b9453df14ad4cb6759178198063dec3d6e0706d4e25611747c0dafd5060cc"
   name = "github.com/francoispqt/gojay"
   packages = ["."]
@@ -32,8 +21,6 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
-    "github.com/ehsangolshani/logstash-go-client",
-    "github.com/ehsangolshani/logstash-go-client/pkg/encode",
     "github.com/francoispqt/gojay",
     "github.com/pkg/errors",
   ]
