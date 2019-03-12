@@ -1,7 +1,6 @@
 package logstash
 
 import (
-	"fmt"
 	"github.com/francoispqt/gojay"
 	"time"
 )
@@ -14,14 +13,13 @@ type Entry struct {
 }
 
 func (e Entry) MarshalJSONObject(enc *gojay.Encoder) {
-	a := Entry{}
-	fmt.Println(a)
-
 	for k, v := range e.Fields {
 		enc.AddInterfaceKeyOmitEmpty(k, v)
 	}
 	enc.StringKeyOmitEmpty("@version", e.Version)
-	enc.TimeKey("@timestamp", e.Timestamp, e.timeFormat)
+	if e.Timestamp != nil {
+		enc.TimeKey("@timestamp", e.Timestamp, e.timeFormat)
+	}
 }
 
 func (e Entry) IsNil() bool {
@@ -62,25 +60,16 @@ func (e Entry) WithTimeFormat(timeFormat string) *Entry {
 }
 
 func (e Entry) WithVersion(version string) *Entry {
-	if e.timeFormat == "" {
-		e.timeFormat = time.RFC3339
-	}
 	e.Version = version
 	return &e
 }
 
 func (e Entry) WithField(name string, value interface{}) *Entry {
-	if e.timeFormat == "" {
-		e.timeFormat = time.RFC3339
-	}
 	e.Fields[name] = value
 	return &e
 }
 
 func (e Entry) WithFields(data map[string]interface{}) *Entry {
-	if e.timeFormat == "" {
-		e.timeFormat = time.RFC3339
-	}
 	for name, value := range data {
 		e.Fields[name] = value
 	}
